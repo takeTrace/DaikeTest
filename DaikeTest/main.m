@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //  ********************      ******************************   //
-
+#pragma mark- 1. Product array
 /**
  *   1. Product array     */
 int * my_product(int *arr, int n)
@@ -65,7 +65,7 @@ void my_productTest()
 
 
 //  ********************      ******************************   //
-
+#pragma mark- 2. Number first
 /**
  *   2. Number first 
         双索引, 遍历的时候遇到0就停止自增, 非0时 i 的位置赋值给 j 的位置, 最后再把剩下的补0
@@ -108,7 +108,7 @@ void numberFirstTest()
 }
 
 //  ********************      ******************************   //
-
+#pragma mark- 4. Simple root square
 /**
  *   4. Simple root square 
      使用牛顿迭代法
@@ -139,7 +139,7 @@ void squareTest()
 }
 
 //  ********************      ******************************   //
-
+#pragma mark- 5. Power
 /**
  *   5. Power
         使用折半传参, 递归调用
@@ -177,21 +177,112 @@ void my_powerTest()
     }
 }
 
+//  ********************      ******************************   //
+#pragma mark- 3. Game of Life
+/**
+ *   3. Game of Life     */
+void gameLife(int *board, int m, int n)
+{
+    
+    printf("\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d", *(board + i*n + j));
+        }
+        
+        printf(",\n");
+    }
+    printf("\n");
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            int lives = 0;
+            // 判断上边
+            if(i > 0){
+                lives += *(board + i*n - n + j) == 1 || *(board + i*n - n + j) == 2 ? 1 : 0;
+            }
+            // 判断左边
+            if(j > 0){
+                lives += *(board + i*n + j - 1) == 1 || *(board + i*n + j - 1) == 2 ? 1 : 0;
+            }
+            // 判断下边
+            if(i < m - 1){
+                lives += *(board + i*n + n + j) == 1 || *(board + i*n + n + j) == 2 ? 1 : 0;
+            }
+            // 判断右边
+            if(j < n - 1){
+                lives += *(board + i*n + j + 1) == 1 || *(board + i*n + j + 1) == 2 ? 1 : 0;
+            }
+            // 判断左上角
+            if(i > 0 && j > 0){
+                lives += *(board + i*n - n + j - 1) == 1 || *(board + i*n - n + j - 1) == 2 ? 1 : 0;
+            }
+            //判断右下角
+            if(i < m - 1 && j < n - 1){
+                lives += *(board + i*n + n + j + 1) == 1 || *(board + i*n + n + j + 1) == 2 ? 1 : 0;
+            }
+            // 判断右上角
+            if(i > 0 && j < n - 1){
+                lives += *(board + i*n - n + j + 1) == 1 || *(board + i*n - n + j + 1) == 2 ? 1 : 0;
+            }
+            // 判断左下角
+            if(i < m - 1 && j > 0){
+                lives += *(board + i*n + n + j - 1) == 1 || *(board + i*n + n + j - 1) == 2 ? 1 : 0;
+            }
+            // 根据周边存活数量更新当前点，结果是0和1的情况不用更新
+            if(*(board + i*n + j) == 0 && lives == 3){
+                *(board + i*n + j) = 3;
+            } else if(*(board + i*n + j) == 1){
+                if(lives < 2 || lives > 3) *(board + i*n + j) = 2;
+            }
+        }
+    }
+    // 解码
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            *(board + i*n + j) = *(board + i*n + j) % 2;
+        }
+    }
+}
+
+void lifeTest()
+{
+    int arr[][12] = {{1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0},
+        {1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0}};
+    
+    //  这里用 C 的情况下确实不太懂怎么测试, 我是在打印的里面看该死的细胞有没有死掉, 该活的细胞有没有活着
+    for (int i = 0; i < 10; i++) {
+        gameLife(*arr, 3, 12);
+    }
+}
 
 
+
+
+//  ********************   主函数   ******************************   //
+
+#pragma mark- main 函数
 int main(int argc, const char * argv[]) {
     
     //  1. Product array
+    printf("\n\nProduct array");
     my_productTest();
     
     //  2. Number first
+    printf("\n\nNumber first");
     numberFirstTest();
     
     //  4. Simple root square
+    printf("\n\nsquare");
     squareTest();
     
     //  5. Power
+    printf("\n\nPower");
     my_powerTest();
+    
+    //  3. Game of Life
+    printf("\n\nGame of Life");
+    lifeTest();
     
     return 0;
 }
