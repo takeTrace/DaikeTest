@@ -138,6 +138,47 @@ void squareTest()
     }
 }
 
+//  ********************      ******************************   //
+
+/**
+ *   5. Power
+        使用折半传参, 递归调用
+ */
+double my_power(double x, int n)
+{
+    if (0 == n) {
+        return 1;
+    }
+    if (1 == n) {
+        return x;
+    }
+    
+    //  折半递归
+    double temp = my_power(x, n/2);
+    
+    if (n % 2) {    //  奇次方多乘一个自己
+        //  <0 的话返回倒数
+        return n > 0 ? (temp * temp * x) : 1/(temp * temp * x);
+        
+    } else  //  偶次方
+    {   //  <0 的话返回倒数
+        return n > 0 ? (temp * temp) : 1/(temp * temp);
+    }
+    
+}
+
+void my_powerTest()
+{
+    double powerResult = my_power(100, 2);
+    NSLog(@"\n%g \n", powerResult);
+    
+    if (powerResult != 10000) {
+        printf("求次方函数失败");
+    }
+}
+
+
+
 int main(int argc, const char * argv[]) {
     
     //  1. Product array
@@ -149,7 +190,8 @@ int main(int argc, const char * argv[]) {
     //  4. Simple root square
     squareTest();
     
-
+    //  5. Power
+    my_powerTest();
     
     return 0;
 }
