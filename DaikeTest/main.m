@@ -64,6 +64,49 @@ void my_productTest()
 }
 
 
+//  ********************      ******************************   //
+
+/**
+ *   2. Number first 
+        双索引, 遍历的时候遇到0就停止自增, 非0时 i 的位置赋值给 j 的位置, 最后再把剩下的补0
+ */
+void numberFirst(int *arr, int count)
+{
+    if (arr == NULL || count == 0) return;
+    
+    int idx = 0;
+    for (int i = 0; i<count; i++) {
+        if (arr[i] != 0) {
+            arr[idx] = arr[i];
+            idx++;
+        }
+    }
+    
+    for (; idx<count; idx++) {
+        arr[idx] = 0;
+    }
+}
+
+void numberFirstTest()
+{
+    int arr[] = {1, 3, 5, 12, 0, 0, 15, 0};
+    int testArr[] = {1, 3, 5, 12, 15, 0, 0, 0};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    numberFirst(arr, n);
+    
+    printf("\n [");
+    for (int i=0; i<n; i++) {
+        printf(" %d  ", arr[i]);
+        
+        if (arr[i] != testArr[i]) {
+            printf("移动0到后面的函数失败");
+        }
+    }
+    
+    printf(" ] \n");
+    
+}
+
 
 
 int main(int argc, const char * argv[]) {
