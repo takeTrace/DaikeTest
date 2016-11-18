@@ -107,11 +107,49 @@ void numberFirstTest()
     
 }
 
+//  ********************      ******************************   //
 
+/**
+ *   4. Simple root square 
+     使用牛顿迭代法
+ */
+double my_sqrt(double x) {
+    if (x == 0) return 0;
+    double last = 0.0;
+    double res = 1.0;
+    while (res != last)
+    {
+        last = res;
+        res = (res + x / res) / 2;
+    }
+    return res;
+}
+
+void squareTest()
+{
+    double n = my_sqrt(9);
+    if (n != 3) {
+        printf("开方失败");
+    }
+    
+    double m = my_sqrt(2);
+    if (m > 0) {
+        printf("\n%g \n", m);
+    }
+}
 
 int main(int argc, const char * argv[]) {
     
+    //  1. Product array
     my_productTest();
+    
+    //  2. Number first
+    numberFirstTest();
+    
+    //  4. Simple root square
+    squareTest();
+    
+
     
     return 0;
 }
